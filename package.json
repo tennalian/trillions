@@ -1,0 +1,33 @@
+{
+  "name": "trillions",
+  "version": "1.0.0",
+  "description": "trillions project",
+  "scripts": {
+    "start": "gulp serve",
+    "build": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "tennalian@gmail.com",
+  "license": "ISC",
+  "homepage": "",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-clean-css": "^2.0.3",
+    "gulp-concat": "^2.6.0",
+    "gulp-connect": "^3.2.0",
+    "gulp-imagemin": "^3.0.2",
+    "gulp-livereload": "^3.8.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.2.0",
+    "gulp-uglify": "^1.5.3"
+  },
+  "dependencies": {
+    "babel-core": "^6.26.0",
+    "del": "^2.2.0",
+    "gulp-babel": "^7.0.0"
+  }
+}
