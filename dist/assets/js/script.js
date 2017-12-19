@@ -2,6 +2,33 @@
   const items = document.querySelectorAll('.countdown');
   countdown.init(items);
 
+  const popup = $('.popup-overlay');
+  $('.show-popup').on('click', e => {
+    e.preventDefault();
+    popup.addClass('opened');
+  });
+
+  $('.popup').on('click', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    e = event || window.event;
+    if (e.target == this) {
+      $('.popup-overlay').removeClass('opened');
+    }
+  });
+
+  const links = $('header .link');
+
+  [].forEach.call(links, function (link) {
+    $(link).on('click', function (e) {
+      e.preventDefault();
+      const href = $(this).attr('href');
+      $('body,html').animate({
+        scrollTop: $(href).offset().top - 110
+      }, 800);
+    });
+  });
+
   //calculator
 
   const incomeHtml = $('.calculator .income span');
@@ -181,7 +208,7 @@
   roadmapRange.rangeslider({
     polyfill: false,
     onSlide: function (position, value) {
-      roadmap.scrollLeft(value - value / 4 + 40);
+      roadmap.scrollLeft(value);
     }
   });
   roadmapNext.on('click', e => {
@@ -207,7 +234,7 @@
   let width = 4000;
   let height = 200;
   let margin = 20;
-  let svg = d3.select(el).append('svg:svg').attr('class', 'line-slider').attr('width', width + 2 * margin).attr('height', height + 4 * margin).append("g").attr("transform", "translate(" + margin + "," + 3 * margin + ")");;
+  let svg = d3.select(el).append('svg:svg').attr('class', 'line-slider').attr('width', width + 2 * margin).attr('height', height + 4 * margin).append("g").attr("transform", "translate(0," + 3 * margin + ")");
 
   let x = d3.scaleTime().range([0, width]);
   let y = d3.scaleLinear().range([height, 0]);
@@ -253,8 +280,9 @@
   const el = document.getElementById('chart');
   let width = el.getBoundingClientRect().width;
   let height = 290;
+  let margin = 20;
 
-  let svg = d3.select(el).append('svg:svg').attr('class', 'line-svg').attr('width', width).attr('height', height).append("g");
+  let svg = d3.select(el).append('svg:svg').attr('class', 'line-svg').attr('width', width).attr('height', height).append("g").attr("transform", "translate(" + margin + "," + 3 * margin + ")");
 
   let x = d3.scaleTime().range([0, width]);
   let y = d3.scaleLinear().range([height, 0]);
@@ -287,4 +315,129 @@
     svg.select('.line-area').attr("d", area);
     svg.select('.dot').attr('cx', d => x(extData[extData.length - 1].x)).attr('cy', d => y(extData[extData.length - 1].y));
   });
+})();
+
+(function () {
+  //histogram
+
+  let svg = null;
+  const labels = ['Pre-Sale', 'Main Sale', 'Розничная цена'];
+  const el = document.getElementById('histogram');
+  const width = 300;
+  const height = 200;
+  const margin = 50;
+  const blockWidth = $(el).width();
+  let yAxisLength = height - margin * 2;
+  let xAxisLength = width;
+
+  let x = d3.scaleBand().domain(labels).range([0, xAxisLength]);
+
+  let y = d3.scaleLinear().domain([0, 10]).range([yAxisLength, 0]);
+
+  let xAxis = d3.axisBottom(x).ticks(1);
+
+  let yAxis = d3.axisLeft(y).ticks(1).tickSizeInner(-xAxisLength);
+
+  const profit = ['40-50%', '50-60%', '60-70%', '70-80%'];
+
+  const tabs = $('.histogramm ul a');
+  [].forEach.call(tabs, tab => {
+    $(tab).on('click', e => {
+      e.preventDefault();
+      const index = $(tab).data('index');
+      const info = getInfo(index);
+      const svg = document.getElementById('histogram').querySelector('svg');
+      $('.histogramm ul a').removeClass('active');
+      $(tab).addClass('active');
+      if (svg) {
+        updateHistogram(info);
+      } else {
+        drawHistogram(info);
+      }
+    });
+  });
+
+  tabs[0].click();
+
+  function getInfo(index) {
+    const data = [{ label: 'Pre-Sale', values: [2, 3, 4, 5] }, { label: 'Main Sale', values: [3, 4, 5, 6] }, { label: 'Розничная цена', values: [10, 10, 10, 10] }];
+    return data.map(d => ({ label: d.label, value: d.values[index] }));
+  }
+
+  function drawHistogram(info) {
+
+    svg = d3.select(el).append('svg:svg').attr('class', 'his').attr('width', width).attr('height', height + 2 * margin).append("g").attr("transform", "translate(0," + margin + ")");
+
+    svg.append('g').attr('class', 'x-axis').call(xAxis);
+
+    svg.append('g').attr('class', 'y-axis').call(yAxis);
+
+    let bar = svg.selectAll('.rect').data(info).enter().append('rect').attr('x', function (d) {
+      return x(d.label) + 10;
+    }).attr('width', x.bandwidth() - 20).attr('fill', function (d, i) {
+      return i === 2 ? '#ea4a3e' : '#41aef1';
+    }).attr('class', 'rect').attr('y', function (d) {
+      return y(d.value);
+    }).attr('height', function (d) {
+      return height - y(d.value);
+    });
+
+    const rects = $('.histogramm .rect');
+    let hs = [];
+    [].forEach.call(rects, r => {
+      hs.push($(r).attr('height'));
+    });
+
+    svg.selectAll('.tick text').attr('class', 'tick-text').attr('dy', height + 10).attr('style', 'font-size: 16px; font-family: "Gotham Pro", Arial, sans-serif; font-weight: 300; fill: #262729;').call(wrap, x.bandwidth() - 20);
+
+    svg.selectAll('.x-axis .tick').append('text').attr('class', 'text').text((d, i) => '$' + info[i].value).attr('dy', (d, i) => height - hs[i] - 10).attr('style', 'font-size: 24px; font-family: "Gotham Pro", Arial, sans-serif; font-weight: 300; fill: #262729;');
+  }
+
+  function updateHistogram(info) {
+    let bar = svg.selectAll('.rect');
+
+    bar.exit().remove();
+    bar.data(info).enter().append('rect').merge(bar).attr('fill', function (d, i) {
+      return i === 2 ? '#ea4a3e' : '#41aef1';
+    }).transition().duration(800).attr('y', function (d) {
+      return y(d.value);
+    }).attr('height', function (d) {
+      return height - y(d.value);
+    });
+
+    setTimeout(() => {
+      const rects = $('.histogramm .rect');
+      let hs = [];
+      [].forEach.call(rects, r => {
+        hs.push($(r).attr('height'));
+      });
+
+      svg.selectAll('.text').text((d, i) => '$' + info[i].value).transition().duration(800).attr('dy', (d, i) => height - (height - y(info[i].value)) - 10);
+    });
+  }
+
+  function wrap(text, width) {
+    text.each(function () {
+      var text = d3.select(this),
+          words = text.text().split(/\s+/).reverse(),
+          word,
+          line = [],
+          lineNumber = 0,
+          lineHeight = 1.1,
+          // ems
+      y = text.attr("y"),
+          dy = parseFloat(text.attr("dy")),
+          tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy);
+      while (word = words.pop()) {
+        line.push(word);
+        tspan.text(line.join(" "));
+        if (tspan.node().getComputedTextLength() > width) {
+          line.pop();
+          tspan.text(line.join(" "));
+          line = [word];
+          tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * 20 + dy).text(word);
+        }
+      }
+    });
+  }
 })();
