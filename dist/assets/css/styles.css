@@ -197,6 +197,8 @@ header .menu ul li .link {
 
 header .menu ul li .btn {
   text-transform: uppercase;
+  padding: 2px 10px;
+  width: auto;
 }
 
 header .menu > a {
@@ -522,6 +524,14 @@ header .menu > a::before {
   margin-top: 50px;
 }
 
+.interface .block-left h3 {
+  display: none;
+}
+
+.interface .block-right h3 {
+  display: block;
+}
+
 .investitions .histogramm ul {
   margin: 0 0 20px;
   padding: 0;
@@ -714,6 +724,10 @@ header .menu > a::before {
 .distribution .fx-image {
   position: relative;
   overflow: hidden;
+}
+
+.distribution .fx-image .xs-sale {
+  display: none;
 }
 
 .distribution .fx-image .center {
@@ -1020,6 +1034,10 @@ header .menu > a::before {
   background: url("../images/distribution.png") no-repeat center;
 }
 
+.fond .fond-image .img {
+  display: none;
+}
+
 .fond .fond-image .item {
   width: 330px;
   position: absolute;
@@ -1191,6 +1209,20 @@ header .menu > a::before {
 .command h2 {
   text-align: center;
   margin: 0 0 50px;
+}
+
+.command .heads .tabs-list {
+  overflow: hidden;
+  max-width: 100%;
+  height: 54px;
+}
+
+.command .heads .tabs-list ul {
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+  overflow-x: auto;
+  height: 70px;
 }
 
 .command .heads ul {
@@ -1625,6 +1657,36 @@ footer p {
   animation: scale .5s;
 }
 
+@media screen and (max-width: 1100px) {
+  header .logo a {
+    width: 130px;
+    min-width: 130px;
+    background: url(../images/logo.png) no-repeat center/contain;
+  }
+  .payment .months .item {
+    min-width: 195px;
+  }
+  .payment .months .item.item-4 {
+    top: 0;
+    right: 0;
+  }
+  .payment .months .item.item-3 {
+    top: 30px;
+    right: 100px;
+  }
+  .payment .months .item.item-2 {
+    top: 60px;
+    right: 200px;
+  }
+  .payment .months .item.item-1 {
+    top: 90px;
+    right: 300px;
+  }
+  .payment .total li {
+    width: 25%;
+  }
+}
+
 @media screen and (max-width: 960px) {
   h2 {
     font-size: 44px;
@@ -1642,6 +1704,165 @@ footer p {
     font-size: 12px;
     line-height: 20px;
   }
+  header .menu ul li {
+    padding: 0 8px;
+  }
+  header .menu ul li .link {
+    font-size: 12px;
+  }
+  header .menu ul li .btn {
+    font-size: 12px;
+  }
+  header .menu > a {
+    font-size: 14px;
+  }
+  header .menu > a::before {
+    width: 24px;
+    height: 24px;
+    background: url("../images/phone_b.png") no-repeat center/contain;
+  }
+  .calculator .range {
+    position: relative;
+  }
+  .calculator .range .value {
+    position: absolute;
+    top: -50px;
+    font-weight: bold;
+    font-size: 24px;
+  }
+  .calculator .block-right {
+    padding-top: 0;
+    -webkit-box-align: start;
+    -webkit-align-items: flex-start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+  }
+  .calculator .block-left p {
+    margin-bottom: 80px;
+  }
+  .calculator .income .sum {
+    font-size: 30px;
+  }
+  .calculator .income-percent .sum {
+    font-size: 30px;
+  }
+  .calculator .calc-plan li p > span {
+    font-size: 18px;
+  }
+  .calculator .calc-plan li p > span ~ span {
+    font-size: 14px;
+    margin-top: 0;
+  }
+  .calculator .calc-plan li .total span {
+    font-size: 24px;
+  }
+  .distribution .wrap:first-child .block-left {
+    width: 39%;
+  }
+  .distribution .wrap:first-child .block-right {
+    width: 59%;
+  }
+  .distribution .advanced p span {
+    font-size: 16px;
+  }
+  .distribution .advanced .table {
+    padding: 0 30px;
+    margin-top: 20px;
+  }
+  .distribution .advanced .table table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .distribution .advanced .table table tr th {
+    font-size: 12px;
+  }
+  .distribution .advanced .table table tr td {
+    font-size: 16px;
+  }
+  .fond .fond-image .item {
+    width: 230px;
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .countdown #days, .countdown #hours, .countdown #mins, .countdown #secs {
+    text-align: center;
+  }
+  .countdown #days span, .countdown #hours span, .countdown #mins span, .countdown #secs span {
+    font-size: 40px;
+    line-height: 30px;
+    width: 30px;
+    min-width: 30px;
+  }
+  .payment .wrap:first-child {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: reverse;
+    -webkit-flex-direction: column-reverse;
+    -ms-flex-direction: column-reverse;
+    flex-direction: column-reverse;
+  }
+  .payment .wrap:first-child .block-left, .payment .wrap:first-child .block-right {
+    width: 100%;
+  }
+  .payment .months {
+    margin: 0 auto;
+    width: 500px;
+  }
+  .distribution .wrap:first-child {
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+  }
+  .distribution .wrap:first-child .block-left, .distribution .wrap:first-child .block-right {
+    width: 100%;
+  }
+  .distribution .wrap:first-child .block-right {
+    margin-top: 20px;
+  }
+  .distribution .advanced p span {
+    font-size: 16px;
+  }
+  .distribution .advanced .table {
+    padding: 0 30px;
+    margin-top: 20px;
+  }
+  .distribution .advanced .table table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .distribution .advanced .table table tr th {
+    font-size: 12px;
+  }
+  .distribution .advanced .table table tr td {
+    font-size: 16px;
+  }
+  .fond .fond-image {
+    background: none;
+    height: auto;
+  }
+  .fond .fond-image .img {
+    display: block;
+    text-align: center;
+  }
+  .fond .fond-image .item {
+    position: relative;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100%;
+    margin-top: 20px;
+  }
+  .command .heads .tabs-container .container .img {
+    min-width: 250px;
+  }
+  .roadmap .line-slider {
+    height: 450px;
+  }
+  .roadmap .line-svg-slider {
+    position: relative;
+    top: -50px;
+  }
 }
 
 @media screen and (max-width: 744px) {
@@ -1656,6 +1877,284 @@ footer p {
   h4 {
     font-size: 16px;
     line-height: 24px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  h4 {
+    font-size: 22px;
+    font-weight: 400;
+  }
+  .wrap {
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    padding: 0 20px;
+  }
+  .wrap .block-left, .wrap .block-right {
+    width: 100% !important;
+  }
+  header {
+    display: block;
+    position: static;
+  }
+  .join {
+    margin-top: 0;
+  }
+  .join .title {
+    text-align: center;
+  }
+  .join h1 {
+    font-size: 24px !important;
+  }
+  .join .block-left form {
+    display: block;
+    text-align: center;
+  }
+  .join .block-left form .btn {
+    margin: 20px auto 0;
+  }
+  .join .block-left form .subscribe {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+  .join .counter {
+    margin: 50px auto 0;
+    max-width: 300px;
+  }
+  .join .title-chart {
+    margin-top: 20px;
+    height: 300px;
+  }
+  .join .title-chart .btn-play {
+    display: none;
+  }
+  .join .title-chart .btn-white {
+    display: inline-block;
+  }
+  .problems .block-left h3 {
+    text-align: center;
+    margin: 0 0 50px;
+  }
+  .payment .wrap:first-child {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+  .payment h3 {
+    text-align: center;
+  }
+  .payment .months {
+    margin: 30px auto;
+    width: 430px;
+  }
+  .payment .months .item.item-4 {
+    top: 0;
+    right: 0;
+  }
+  .payment .months .item.item-3 {
+    top: 30px;
+    right: 80px;
+  }
+  .payment .months .item.item-2 {
+    top: 60px;
+    right: 160px;
+  }
+  .payment .months .item.item-1 {
+    top: 90px;
+    right: 240px;
+  }
+  .payment .total {
+    display: block;
+  }
+  .payment .total li {
+    width: 100%;
+    max-width: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  .payment .total li .img {
+    min-width: 80px;
+    padding-right: 20px;
+  }
+  .payment .total li ~ li {
+    margin-top: 20px;
+  }
+  .investitions h3 {
+    text-align: center;
+  }
+  .investitions .histogramm ul li {
+    text-align: center;
+  }
+  .interface .block-left h3 {
+    display: block;
+    text-align: center;
+  }
+  .interface .block-right h3 {
+    display: none;
+  }
+  .interface .btn {
+    margin: 30px auto 0;
+  }
+  .calculator h3 {
+    text-align: center;
+  }
+  .calculator .range {
+    position: relative;
+  }
+  .calculator .range .value {
+    position: absolute;
+    top: -50px;
+    font-weight: bold;
+    font-size: 24px;
+  }
+  .calculator .block-right {
+    margin-top: 30px;
+    -webkit-box-align: start;
+    -webkit-align-items: flex-start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+  }
+  .calculator .block-left p {
+    text-align: center;
+  }
+  .calculator .block-left .range {
+    width: 100%;
+  }
+  .calculator .income .sum {
+    font-size: 40px;
+  }
+  .calculator .income-percent .sum {
+    font-size: 40px;
+  }
+  .calculator .calc-plan {
+    margin: 30px 0 0;
+    display: block;
+  }
+  .calculator .calc-plan li {
+    width: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    padding: 0;
+  }
+  .calculator .calc-plan li ~ li {
+    margin-top: 50px;
+  }
+  .calculator .calc-plan li p {
+    margin-right: 20px;
+  }
+  .calculator .calc-plan li p:first-child {
+    margin: 0;
+    width: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: reverse;
+    -webkit-flex-direction: row-reverse;
+    -ms-flex-direction: row-reverse;
+    flex-direction: row-reverse;
+    -webkit-box-align: end;
+    -webkit-align-items: flex-end;
+    -ms-flex-align: end;
+    align-items: flex-end;
+    -webkit-box-pack: end;
+    -webkit-justify-content: flex-end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+    padding-bottom: 5px;
+    border-bottom: 2px solid #d3d4d4;
+  }
+  .calculator .calc-plan li p:first-child span {
+    margin: 0 10px 2px 0;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  .calculator .calc-plan li p span {
+    margin: 0;
+    font-size: 20px;
+  }
+  .calculator .calc-plan li p ~ p {
+    margin-top: 15px;
+  }
+  .calculator .calc-plan li .total {
+    width: 100%;
+    text-align: right;
+    border: 0;
+    margin: 15px 0 0;
+    padding: 0;
+  }
+  .calculator .calc-plan li .total p {
+    border: 0;
+    width: 50%;
+    border-top: 2px solid #41aef2;
+    padding: 15px 0;
+    display: block;
+  }
+  .calculator .calc-plan li .total p span {
+    margin: 0;
+    font-size: 24px;
+  }
+  .distribution h3 {
+    text-align: center;
+  }
+  .distribution .btn {
+    margin: 30px auto 0;
+  }
+  .distribution .fx-image .xs-sale {
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .distribution .fx-image .sale {
+    display: none;
+  }
+  .distribution .fx-image .item {
+    position: relative;
+    top: 0 !important;
+    right: 0 !important;
+    left: 0 !important;
+    margin-top: 15px;
+    text-align: center;
+  }
+  .distribution .fx-image .center {
+    width: 100%;
+    text-align: center;
+    left: 0;
+  }
+  .distribution .advanced .block-right {
+    margin-top: 20px;
+  }
+  .causes .block-right {
+    margin-top: 50px;
+  }
+  .command .heads .tabs-container .container.active {
+    display: block;
+  }
+  .command .heads .tabs-container .container .img {
+    text-align: center;
+    margin: 0 0 15px;
+  }
+  .command .heads ul {
+    white-space: nowrap;
+  }
+  .command .heads ul li {
+    width: auto;
+    margin-right: 20px;
+  }
+  .command .heads ul li a span {
+    white-space: nowrap;
   }
 }
 

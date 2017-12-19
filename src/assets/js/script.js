@@ -106,19 +106,19 @@
   }
 
   function income(value, factor) {
-    return (value < 2000) ? ((8.5*value)/factor.a - value) : ((72.25*value)/factor.a*factor.b - value);
+    return (value < 2000) ? Math.floor((8.5*value)/factor.a - value) : Math.floor((72.25*value)/factor.a*factor.b - value);
   }
 
   function incomePersent(value, factor) {
-    return (value < 2000) ? ((8.5 - factor.a)/factor.a)*100 : ((72.25 - factor.a*factor.b)/factor.a*factor.b)*100;
+    return (value < 2000) ? Math.floor(((8.5 - factor.a)/factor.a)*100) : Math.floor(((72.25 - factor.a*factor.b)/factor.a*factor.b)*100);
   }
 
   function preSale(value, factor) {
-    return {x: value, y: value/factor.a, z: factor.a};
+    return {x: value, y: Math.floor(value/factor.a), z: factor.a};
   }
 
   function tokenSale(value, factor) {
-    return {x: value/factor.a, y: Math.floor(8.5*value/factor.a), z: (8.5*value)/factor.a - value};
+    return {x: Math.floor(value/factor.a), y: Math.floor(8.5*value/factor.a), z: Math.floor((8.5*value)/factor.a - value)};
   }
 
   function closedRaund(value, factor) {
@@ -129,7 +129,7 @@
     return {
       x: Math.floor(8.5*value/(factor.a*factor.b)),
       y: Math.floor(72.25*value/(factor.a*factor.b)),
-      z: Math.floor(72.25*value/(factor.a*factor.b)) - Math.floor(8.5*value/(factor.a*factor.b))
+      z: Math.floor(72.25*value/(factor.a*factor.b) - 8.5*value/(factor.a*factor.b))
     };
   }
 
@@ -191,7 +191,20 @@
         slidesToShow: 3,
         slidesToScroll: 1,
         prevArrow: '<button type="button" class="slick-prev"></button>',
-        nextArrow: '<button type="button" class="slick-next"></button>'
+        nextArrow: '<button type="button" class="slick-next"></button>',
+        responsive: [
+          {
+            breakpoint: 600,
+            settings: {
+              slidesToShow: 2,
+            }
+          }, {
+            breakpoint: 480,
+            settings: {
+              slidesToShow: 1,
+            }
+          }
+        ]
       });
     }
   }
@@ -242,7 +255,7 @@
   let height = 200;
   let margin = 20;
   let svg = d3.select(el).append('svg:svg')
-    .attr('class', 'line-slider')
+    .attr('class', 'line-svg-slider')
     .attr('width', width + 2*margin)
     .attr('height', height + 4*margin)
     .append("g")
@@ -365,7 +378,7 @@
 	  .attr('width', width)
 	  .attr('height', height)
 	  .append("g")
-    .attr("transform", "translate(" + margin + "," + 3*margin + ")");
+    .attr("transform", "translate(0," + 3*margin + ")");
 
 	let x = d3.scaleTime().range([0, width]);
 	let y = d3.scaleLinear().range([height, 0]);
