@@ -36,6 +36,7 @@ body {
   font-family: "Gotham Pro", Arial, sans-serif;
   font-weight: 400;
   color: #252729;
+  min-width: 300px;
   background: white;
 }
 
@@ -167,6 +168,14 @@ header .menu {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+header .menu .xs-menu {
+  display: none;
 }
 
 header .menu ul {
@@ -201,7 +210,7 @@ header .menu ul li .btn {
   width: auto;
 }
 
-header .menu > a {
+header .menu .phone {
   margin-left: 16px;
   display: -webkit-box;
   display: -webkit-flex;
@@ -216,7 +225,7 @@ header .menu > a {
   white-space: nowrap;
 }
 
-header .menu > a::before {
+header .menu .phone::before {
   content: '';
   display: inline-block;
   vertical-align: middle;
@@ -224,6 +233,13 @@ header .menu > a::before {
   height: 31px;
   background: url("../images/phone_b.png") no-repeat center/contain;
   margin-right: 16px;
+}
+
+header .menu .xs-menu-btn {
+  display: none;
+  background: url("../images/bar.svg") no-repeat center/40px;
+  width: 35px;
+  height: 23px;
 }
 
 .join {
@@ -266,9 +282,14 @@ header .menu > a::before {
   font-size: 20px;
 }
 
+.join #chart {
+  width: 100%;
+  max-width: 100%;
+}
+
 .join .title-chart {
   position: relative;
-  height: 350px;
+  height: 300px;
 }
 
 .join .title-chart ul {
@@ -285,8 +306,7 @@ header .menu > a::before {
   right: 0;
   top: 0;
   padding: 16px 16px 300px;
-  color: black;
-  line-height: 30px;
+  color: rgba(37, 39, 41, 0.5);
   background: #ffffff;
   background: -webkit-linear-gradient(#ffffff 20%, #c6e5ff 100%);
   background: -webkit-gradient(linear, left top, left bottom, color-stop(20%, #ffffff), to(#c6e5ff));
@@ -299,9 +319,17 @@ header .menu > a::before {
   top: 20px;
 }
 
+.join .title-chart ul li:last-child {
+  left: 20px;
+  top: 100px;
+  background: none;
+}
+
 .join .title-chart ul li span {
   font-weight: bold;
   display: block;
+  color: #252729;
+  margin-top: 10px;
 }
 
 .join .title-chart svg {
@@ -553,6 +581,23 @@ header .menu > a::before {
 
 .investitions .histogramm ul li a.active, .investitions .histogramm ul li a:hover {
   color: #252729;
+}
+
+.investitions .histogramm #histogram {
+  position: relative;
+  padding-top: 40px;
+  width: 300px;
+  max-width: 300px;
+}
+
+.investitions .histogramm #histogram .income {
+  position: absolute;
+  font-size: 18px;
+  font-weight: 400;
+  text-align: center;
+  left: 0;
+  top: 20px;
+  width: 100%;
 }
 
 .investitions .histogramm svg {
@@ -942,6 +987,7 @@ header .menu > a::before {
 
 .roadmap .line-slider .events .item {
   padding: 30px;
+  position: relative;
   width: 1005px;
 }
 
@@ -1240,7 +1286,7 @@ header .menu > a::before {
 
 .command .heads ul li {
   list-style: none;
-  width: 30%;
+  padding: 0 15px;
   text-align: center;
 }
 
@@ -1503,6 +1549,26 @@ footer p {
   content: 'Секунд';
 }
 
+.close {
+  display: inline-block;
+  border: 1px solid #d3d4d4;
+  background: white;
+  width: 40px;
+  height: 40px;
+  background: url("../images/close.png") no-repeat center/20px;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  cursor: pointer;
+  opacity: .6;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.close:hover {
+  opacity: 1;
+}
+
 .popup-overlay {
   position: fixed;
   z-index: 999;
@@ -1714,11 +1780,12 @@ footer p {
     font-size: 12px;
   }
   header .menu > a {
-    font-size: 14px;
+    font-size: 12px;
   }
   header .menu > a::before {
     width: 24px;
     height: 24px;
+    margin-right: 8px;
     background: url("../images/phone_b.png") no-repeat center/contain;
   }
   .calculator .range {
@@ -1786,6 +1853,95 @@ footer p {
 }
 
 @media screen and (max-width: 800px) {
+  header {
+    padding: 20px 0;
+    height: 80px;
+    position: fixed;
+  }
+  header .wrap {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+  }
+  header .menu .lg-menu {
+    display: none;
+  }
+  header .menu .phone {
+    margin: 0 40px;
+    height: 32px;
+    font-size: 14px;
+  }
+  header .menu .xs-menu-btn {
+    display: block;
+    height: 32px;
+  }
+  header .menu .xs-menu {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    position: fixed;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    max-width: 0;
+    background: white;
+    top: 0;
+    right: 0;
+    padding: 0;
+    z-index: 99999;
+    overflow: hidden;
+    -webkit-transition: .5s max-width;
+    transition: .5s max-width;
+    border: 1px solid #d3d4d4;
+  }
+  header .menu .xs-menu.opened {
+    max-width: 2000px;
+    -webkit-transition: .5s max-width;
+    transition: .5s max-width;
+  }
+  header .menu .xs-menu ul {
+    margin: 0;
+    padding: 20px;
+    display: block;
+  }
+  header .menu .xs-menu ul li {
+    display: block;
+    width: 100%;
+  }
+  header .menu .xs-menu ul li .link {
+    font-size: 16px;
+    display: inline-block;
+    padding: 10px 20px;
+    white-space: nowrap;
+  }
+  header .menu .xs-menu ul li ~ li {
+    margin-top: 25px;
+  }
+  .join {
+    padding-top: 100px;
+    margin-top: 0;
+  }
   .countdown #days, .countdown #hours, .countdown #mins, .countdown #secs {
     text-align: center;
   }
@@ -1878,29 +2034,6 @@ footer p {
     font-size: 16px;
     line-height: 24px;
   }
-}
-
-@media screen and (max-width: 600px) {
-  h4 {
-    font-size: 22px;
-    font-weight: 400;
-  }
-  .wrap {
-    -webkit-flex-wrap: wrap;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-    padding: 0 20px;
-  }
-  .wrap .block-left, .wrap .block-right {
-    width: 100% !important;
-  }
-  header {
-    display: block;
-    position: static;
-  }
-  .join {
-    margin-top: 0;
-  }
   .join .title {
     text-align: center;
   }
@@ -1932,6 +2065,35 @@ footer p {
   }
   .join .title-chart .btn-white {
     display: inline-block;
+  }
+  .join .title-chart ul li {
+    font-size: 12px;
+    width: 150px;
+  }
+  .join .title-chart ul li:first-child {
+    right: 150px;
+  }
+  .join .title-chart ul li:last-child {
+    left: 0;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  h4 {
+    font-size: 22px;
+    font-weight: 400;
+  }
+  .wrap {
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    padding: 0 20px;
+  }
+  .wrap .block-left, .wrap .block-right {
+    width: 100% !important;
+  }
+  header {
+    display: block;
   }
   .problems .block-left h3 {
     text-align: center;
@@ -1987,6 +2149,9 @@ footer p {
   }
   .investitions h3 {
     text-align: center;
+  }
+  .investitions .histogramm #histogram {
+    margin: 0 auto;
   }
   .investitions .histogramm ul li {
     text-align: center;
@@ -2156,6 +2321,21 @@ footer p {
   .command .heads ul li a span {
     white-space: nowrap;
   }
+  .popup-overlay .popup {
+    padding: 0;
+  }
+  .popup-overlay .modal {
+    width: 100%;
+    height: 100%;
+  }
+  .popup-overlay .modal h3 {
+    text-align: center;
+  }
+  .popup-overlay .modal > div {
+    padding-top: 100px;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+  }
 }
 
 @media screen and (max-width: 480px) {
@@ -2174,6 +2354,49 @@ footer p {
   p {
     font-size: 14px;
     line-height: 24px;
+  }
+  header {
+    height: 130px;
+  }
+  header .wrap {
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+  }
+  header .menu {
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    width: 100%;
+    margin-top: 15px;
+  }
+  header .menu .phone {
+    margin: 0;
+  }
+  header .menu .xs-menu-btn {
+    position: absolute;
+    right: 20px;
+    top: 35%;
+  }
+  .join {
+    padding-top: 150px;
+  }
+  .calculator .income .sum {
+    font-size: 18px;
+  }
+  .calculator .income-percent .sum {
+    font-size: 18px;
+  }
+  .distribution .fx-image .center {
+    top: 90px;
+  }
+  .distribution .advanced table tr td {
+    font-size: 12px !important;
   }
 }
 

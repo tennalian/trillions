@@ -17,11 +17,27 @@
     }
   });
 
+  $('.popup .close').on('click',function(e){
+    e.preventDefault();
+    $('.popup-overlay').removeClass('opened');
+  });
+
+  $('.xs-menu-btn').on('click', function(e) {
+    e.preventDefault();
+    $('.xs-menu').addClass('opened');
+  });
+
+  $('.xs-menu .close').on('click', function(e) {
+    e.preventDefault();
+    $('.xs-menu').removeClass('opened');
+  })
+
   const links = $('header .link');
 
   [].forEach.call(links, function(link) {
     $(link).on('click', function(e) {
       e.preventDefault();
+      $('.xs-menu').removeClass('opened');
       const href = $(this).attr('href');
       $('body,html').animate({
         scrollTop: $(href).offset().top - 110
@@ -135,16 +151,26 @@
 
   // command
 
-  const commandList = document.querySelector('.scroll-menu ul');
+  const commandHeadsList = document.querySelector('.heads .scroll-menu ul');
+  const commandList = document.querySelector('.departments .scroll-menu ul');
   if (commandList.addEventListener) {
       commandList.addEventListener("mousewheel", mouseWheelHandler(), false);
       commandList.addEventListener("DOMMouseScroll", mouseWheelHandler(), false);
       commandList.addEventListener("mousewheel", mouseWheelHandler(), false);
       commandList.addEventListener("DOMMouseScroll", mouseWheelHandler(), false);
+
+      commandHeadsList.addEventListener("mousewheel", mouseWheelHandler(), false);
+      commandHeadsList.addEventListener("DOMMouseScroll", mouseWheelHandler(), false);
+      commandHeadsList.addEventListener("mousewheel", mouseWheelHandler(), false);
+      commandHeadsList.addEventListener("DOMMouseScroll", mouseWheelHandler(), false);
   } else {
       commandList.attachEvent("onmousewheel", mouseWheelHandler());
       commandList.attachEvent("onmousewheel", mouseWheelHandler());
+
+      commandHeadsList.attachEvent("onmousewheel", mouseWheelHandler());
+      commandHeadsList.attachEvent("onmousewheel", mouseWheelHandler());
   }
+
 
   let slickSlider = null; // for sliders
   const components = document.querySelectorAll('.tabs');
@@ -436,10 +462,17 @@
 	  .transition()
 	  .duration(200)
 	  .delay(1200)
-	  .attr('r', 7)
+	  .attr('r', 7);
+
+  let text = svg.append('text')
+    .attr('class', 'dot-text')
+    .text('$135 668')
+    .attr('dx', d => x(extData[extData.length-1].x) - 50)
+    .attr('dy', d => y(extData[extData.length-1].y) - 10)
+    .attr('style', 'fill: #252729; font-size: 18px; font-weight: 400; font-family: "Gotham Pro", Arial, sans-serif');
 
 	d3.select(window).on('resize.line', () => {
-		let w = el.getBoundingClientRect().width;
+		let w = $(el).width();
 	  svg.attr('width', w);
 	  x.range([0, w]);
 	  svg.select('.line')
@@ -451,6 +484,9 @@
 	  svg.select('.dot')
       .attr('cx', d => x(extData[extData.length-1].x))
       .attr('cy', d => y(extData[extData.length-1].y))
+    svg.select('.dot-text')
+      .attr('dx', d => x(extData[extData.length-1].x) - 50)
+      .attr('dy', d => y(extData[extData.length-1].y) - 10)
 	});
 
 })();
@@ -460,13 +496,13 @@
 
   let svg = null;
   const labels = ['Pre-Sale', 'Main Sale', 'Розничная цена'];
+  const income = $('#histogram .income');
   const el = document.getElementById('histogram');
-  const width = 300;
   const height = 200;
   const margin = 50;
-  const blockWidth = $(el).width();
+  const blockWidth = 300;
   let yAxisLength = height - margin*2;
-  let xAxisLength = width;
+  let xAxisLength = blockWidth;
 
   let x = d3.scaleBand()
       .domain(labels)
@@ -510,14 +546,14 @@
       {label: 'Main Sale', values: [3, 4, 5, 6]},
       {label: 'Розничная цена', values: [10, 10, 10, 10]}
     ];
-    return data.map(d => ({label: d.label, value: d.values[index]}));
+    return data.map(d => ({label: d.label, value: d.values[index], income: profit[index]}));
   }
 
   function drawHistogram(info) {
-
+    let index;
     svg = d3.select(el).append('svg:svg')
         .attr('class', 'his')
-        .attr('width', width)
+        .attr('width', blockWidth)
         .attr('height', height + 2*margin)
         .append("g")
         .attr("transform", "translate(0," + margin + ")");
@@ -544,12 +580,13 @@
           return height - y(d.value);
         });
 
-
     const rects = $('.histogramm .rect');
     let hs = [];
     [].forEach.call(rects, (r) => {
       hs.push($(r).attr('height'));
     });
+
+    income[0].innerHTML = info[0].income + '<br/>выгода';
 
     svg.selectAll('.tick text')
       .attr('class', 'tick-text')
@@ -581,6 +618,7 @@
         return height - y(d.value);
       });
 
+    income[0].innerHTML = info[0].income + '<br/>выгода';
 
     setTimeout(() => {
       const rects = $('.histogramm .rect');
