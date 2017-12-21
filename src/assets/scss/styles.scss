@@ -260,7 +260,7 @@ header{
             position: absolute;
             top: 0;
             right: 0;
-            z-index: 8888;
+            z-index: 10;
             border: 0;
             border-radius: 0 20px 20px 0;
             background: white url('../images/mail.png') no-repeat center / 38px;
@@ -429,15 +429,15 @@ header{
 			}
 			&.item-3{
 				top: 30px;
-				right: 150px;
+				right: 130px;
 			}
 			&.item-2{
 				top: 60px;
-				right: 300px;
+				right: 260px;
 			}
 			&.item-1{
 				top: 90px;
-				right: 450px;
+				right: 390px;
 			}
 			&:hover{z-index: 10;}
 		}
@@ -631,10 +631,10 @@ header{
 					font-size: 24px;
           margin-top: 20px;
           color: $color;
-          white-space: nowrap;
 					& ~ span{
 						font-size: 20px;
             margin-top: 0;
+            white-space: nowrap;
 					}
 				}
 				&:first-child{
@@ -1141,6 +1141,20 @@ header{
         }
         .text{
           padding-left: 35px;
+          ul{
+            margin: 25px 0;
+            padding: 0;
+            justify-content: flex-start;
+            li{
+              margin-right: 8px;
+              display: inline-block;
+              vertical-align: top;
+              padding: 0;
+              a, a:hover{
+                text-decoration: none;
+              }
+            }
+          }
         }
         &.active{display: flex;}
       }
@@ -1238,15 +1252,16 @@ header{
               }
             }
             ul{
-              margin: 0;
+              margin: 10px 0 0;
               padding: 0;
               display: block;
+              text-align: center;
               line-height: 0;
               li{
                 list-style: none;
                 display: inline-block;
                 vertical-align: middle;
-                margin-right: 16px;
+                padding: 0 5px;
                 a{
                   display: block;
                   text-decoration: none;
@@ -1613,6 +1628,30 @@ footer{
       }
     }
   }
+
+  .payment{
+    .months{
+      .item{
+        min-width:195px;
+        &.item-4{
+          top: 0;
+          right: 0;
+        }
+        &.item-3{
+          top: 30px;
+          right: 80px;
+        }
+        &.item-2{
+          top: 60px;
+          right: 160px;
+        }
+        &.item-1{
+          top: 90px;
+          right: 240px;
+        }
+      }
+    }
+  }
 }
 
 @media screen and (max-width: 800px){
@@ -1975,16 +2014,6 @@ footer{
       p{text-align: center;}
       .range{width: 100%;}
     }
-    .income{
-      .sum{
-        font-size: 40px;
-      }
-    }
-    .income-percent{
-      .sum{
-        font-size: 40px;
-      }
-    }
 
     .calc-plan{
       margin: 30px 0 0;
@@ -2175,6 +2204,9 @@ footer{
 
   .distribution{
     .fx-image{
+      .xs-sale{
+        max-width: 250px;
+      }
       .center {top: 90px}
     }
     .advanced{

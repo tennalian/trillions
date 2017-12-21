@@ -65,8 +65,10 @@ gulp.task('css', function() {
 
 gulp.task('js', function() {
     return gulp.src(paths.js)
-        // .pipe(uglify())
-        .pipe(babel())
+        .pipe(babel({
+          presets: ['es2015']
+        }))
+        .pipe(uglify())
         .pipe(gulp.dest('dist/assets/js'))
         .pipe(connect.reload());
 });
