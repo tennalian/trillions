@@ -12,11 +12,12 @@ var gulp = require('gulp'),
     imagemin = require('gulp-imagemin'),
     del = require('del'),
     babel = require("gulp-babel");
+const minify = require("gulp-babel-minify");
 
 var paths = {
     images: 'src/assets/images/**/*',
     fonts: 'src/assets/fonts/**/*',
-    js: 'src/assets/js/*',
+    js: 'src/assets/js/script.js',
     libs: 'src/assets/js/lib/*',
     scss: 'src/assets/scss/styles.scss',
     html: 'src/**/*',
@@ -66,9 +67,9 @@ gulp.task('css', function() {
 gulp.task('js', function() {
     return gulp.src(paths.js)
         .pipe(babel({
-          presets: ['es2015']
+          presets: ['es2015'],
         }))
-        .pipe(uglify())
+        .pipe(minify())
         .pipe(gulp.dest('dist/assets/js'))
         .pipe(connect.reload());
 });
