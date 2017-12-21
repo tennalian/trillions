@@ -45,7 +45,6 @@
     });
   });
 
-
   //calculator
 
   const incomeHtml = $('.calculator .income span');
@@ -85,24 +84,24 @@
       const closedRaundValue = closedRaund(value, factors);
       const afterRaundValue = afterRaund(value, factors);
 
-      incomeHtml.text(incomeValue);
-      incomePersentHtml.text(incomePersentValue);
+      incomeHtml.text(replace(incomeValue));
+      incomePersentHtml.text(replace(incomePersentValue));
 
-      preSaleX.text(preSaleValue.x);
-      preSaleY.text(preSaleValue.y);
+      preSaleX.text(replace(preSaleValue.x));
+      preSaleY.text(replace(preSaleValue.y));
       preSaleZ.text(preSaleValue.z);
 
-      closedRaundX.text(closedRaundValue.x);
-      closedRaundY.text(closedRaundValue.y);
+      closedRaundX.text(replace(closedRaundValue.x));
+      closedRaundY.text(replace(closedRaundValue.y));
       closedRaundZ.text(closedRaundValue.z);
 
-      afterRaundX.text(afterRaundValue.x);
-      afterRaundY.text(afterRaundValue.y);
-      afterRaundZ.text(afterRaundValue.z);
+      afterRaundX.text(replace(afterRaundValue.x));
+      afterRaundY.text(replace(afterRaundValue.y));
+      afterRaundZ.text(replace(afterRaundValue.z));
 
-      tokenSaleX.text(tokenSaleValue.x);
-      tokenSaleY.text(tokenSaleValue.y);
-      tokenSaleZ.text(tokenSaleValue.z);
+      tokenSaleX.text(replace(tokenSaleValue.x));
+      tokenSaleY.text(replace(tokenSaleValue.y));
+      tokenSaleZ.text(replace(tokenSaleValue.z));
   }
 
   function factor(value) {
@@ -130,15 +129,27 @@
   }
 
   function preSale(value, factor) {
-    return {x: value, y: Math.floor(value/factor.a), z: factor.a};
+    return {
+      x: value,
+      y: Math.floor(value/factor.a),
+      z: factor.a
+    };
   }
 
   function tokenSale(value, factor) {
-    return {x: Math.floor(value/factor.a), y: Math.floor(8.5*value/factor.a), z: Math.floor((8.5*value)/factor.a - value)};
+    return {
+      x: Math.floor(value/factor.a),
+      y: Math.floor(8.5*value/factor.a),
+      z: Math.floor((8.5*value)/factor.a - value)
+    };
   }
 
   function closedRaund(value, factor) {
-    return {x: Math.floor(8.5*value/factor.a), y: Math.floor(8.5*value/(factor.a*factor.b)), z: factor.b};
+    return {
+      x: Math.floor(8.5*value/factor.a),
+      y: Math.floor(8.5*value/(factor.a*factor.b)),
+      z: factor.b
+    };
   }
 
   function afterRaund(value, factor) {
@@ -147,6 +158,11 @@
       y: Math.floor(72.25*value/(factor.a*factor.b)),
       z: Math.floor(72.25*value/(factor.a*factor.b) - 8.5*value/(factor.a*factor.b))
     };
+  }
+
+  function replace(string) {
+    string = String(string);
+    return string.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ')
   }
 
   // command
@@ -239,6 +255,10 @@
     slickSlider && $(slickSlider).slick('unslick');
   }
 
+})();
+
+(function() {
+
   //roadmap
 
   const roadmap = $('.line-slider');
@@ -278,17 +298,17 @@
   ]
 
   let width = 4000;
-  let height = 200;
+  let height = 400;
   let margin = 20;
   let svg = d3.select(el).append('svg:svg')
     .attr('class', 'line-svg-slider')
     .attr('width', width + 2*margin)
     .attr('height', height + 4*margin)
     .append("g")
-    .attr("transform", "translate(0," + 3*margin + ")");
+    .attr("transform", "translate(0," + (200 + margin) + ")");
 
   let x = d3.scaleTime().range([0, width]);
-  let y = d3.scaleLinear().range([height, 0]);
+  let y = d3.scaleLinear().range([200, 0]);
 
   x.domain(d3.extent(data, function(d) { return d.x; }));
   y.domain([0, d3.max(data, function(d) { return d.y2; })]);
@@ -309,9 +329,24 @@
       .data([dataLine])
       .attr("class", `line-${title}`)
       .attr('stroke', color)
-      .attr('stroke-width', 4)
+      .attr('stroke-width', 6)
       .attr('fill', 'transparent')
       .attr("d", line);
+
+    if (title === '2') {
+      let img = svg.selectAll("dot")
+        .data(dataLine)
+        .enter()
+        .filter((item, i) => {
+          return (i > 0 && i < 4);
+        })
+        .append("image")
+        .attr("xlink:href", "assets/images/line.png")
+        .attr("x", d => x(d.x) - 1)
+        .attr("y", d => y(d.y) - 400)
+        .attr("width", 2)
+        .attr("height", 400);
+    }
 
     let dots = svg.selectAll("dot")
       .data(dataLine)
@@ -323,7 +358,7 @@
       .attr('class', 'dot')
       .attr('fill', color)
       .attr('stroke', 'white')
-      .attr('stroke-width', 2)
+      .attr('stroke-width', 4)
       .attr('cx', d => x(d.x))
       .attr('cy', d => y(d.y))
       .attr('r', 7)
@@ -342,13 +377,15 @@
       .text(d => d.title)
       .attr('style', 'fill:'+color+'; font-size: 36px; font-weight: 400; font-family: "Gotham Pro", Arial, sans-serif')
       .attr('dy', d => y(d.y) - 20)
-      .attr('dx', d => x(d.x))
+      .attr('dx', d => x(d.x) - 10)
       .attr('text-anchor', 'end');
-    }
+  }
 })();
 
 (function() {
+
 	//top chart
+
 	const data = [
 	  {x: 0, y: 10},
 	  {x: 1, y: 11},
@@ -432,7 +469,7 @@
 	  .data([data])
 	  .attr("class", "line")
 	  .attr('stroke', 'rgba(0,0,0,.2)')
-	  .attr('stroke-width', 4)
+	  .attr('stroke-width', 5)
 	  .attr('fill', 'transparent')
 	  .attr("d", valueline);
 
@@ -440,7 +477,7 @@
 	  .data([extData])
 	  .attr("class", "line-progress")
 	  .attr('stroke', '#1492ff')
-	  .attr('stroke-width', 4)
+	  .attr('stroke-width', 5)
 	  .attr('fill', 'transparent')
 	  .attr("d", valueline)
 	  .attr("stroke-dasharray", width)
@@ -456,18 +493,18 @@
 	  .attr('r', 0)
 	  .attr('fill', '#1492ff')
 	  .attr('stroke', 'white')
-	  .attr('stroke-width', 2)
+	  .attr('stroke-width', 5)
 	  .attr('cx', d => x(extData[extData.length-1].x))
 	  .attr('cy', d => y(extData[extData.length-1].y))
 	  .transition()
 	  .duration(200)
 	  .delay(1200)
-	  .attr('r', 7);
+	  .attr('r', 6);
 
   let text = svg.append('text')
     .attr('class', 'dot-text')
     .text('$135 668')
-    .attr('dx', d => x(extData[extData.length-1].x) - 50)
+    .attr('dx', d => x(extData[extData.length-1].x))
     .attr('dy', d => y(extData[extData.length-1].y) - 10)
     .attr('style', 'fill: #252729; font-size: 18px; font-weight: 400; font-family: "Gotham Pro", Arial, sans-serif');
 
@@ -492,17 +529,19 @@
 })();
 
 (function() {
+
   //histogram
 
   let svg = null;
   const labels = ['Pre-Sale', 'Main Sale', 'Розничная цена'];
+  const profit = ['40-50%', '50-60%', '60-70%', '70-80%'];
   const income = $('#histogram .income');
   const el = document.getElementById('histogram');
   const height = 200;
   const margin = 50;
-  const blockWidth = 300;
+  let width = 400;
   let yAxisLength = height - margin*2;
-  let xAxisLength = blockWidth;
+  let xAxisLength = 300;
 
   let x = d3.scaleBand()
       .domain(labels)
@@ -519,8 +558,6 @@
     .ticks(1)
     .tickSizeInner(-xAxisLength);
 
-  const profit = ['40-50%', '50-60%', '60-70%', '70-80%'];
-
   const tabs = $('.histogramm ul a');
   [].forEach.call(tabs, (tab) => {
     $(tab).on('click', e => {
@@ -531,29 +568,19 @@
       $('.histogramm ul a').removeClass('active');
       $(tab).addClass('active');
       if (svg) {
-        updateHistogram(info)
+        updateHistogram(info);
       } else {
-        drawHistogram(info)
+        drawHistogram(info);
       }
     })
   });
 
   tabs[0].click();
 
-  function getInfo(index) {
-    const data = [
-      {label: 'Pre-Sale', values: [2, 3, 4, 5]},
-      {label: 'Main Sale', values: [3, 4, 5, 6]},
-      {label: 'Розничная цена', values: [10, 10, 10, 10]}
-    ];
-    return data.map(d => ({label: d.label, value: d.values[index], income: profit[index]}));
-  }
-
   function drawHistogram(info) {
-    let index;
     svg = d3.select(el).append('svg:svg')
         .attr('class', 'his')
-        .attr('width', blockWidth)
+        .attr('width', width)
         .attr('height', height + 2*margin)
         .append("g")
         .attr("transform", "translate(0," + margin + ")");
@@ -566,11 +593,12 @@
       .attr('class', 'y-axis')
       .call(yAxis);
 
+      console.log(info)
     let bar = svg.selectAll('.rect')
       .data(info)
       .enter().append('rect')
         .attr('x', function(d) {return x(d.label) + 10; })
-        .attr('width', x.bandwidth() - 20)
+        .attr('width', x.bandwidth() - 30)
         .attr('fill', function(d, i) {
           return (i === 2) ? '#ea4a3e' : '#41aef1';
         })
@@ -587,6 +615,41 @@
     });
 
     income[0].innerHTML = info[0].income + '<br/>выгода';
+
+    svg.append('svg:line')
+      .attr('x1', x(info[0].label))
+      .attr('y1', y(info[0].value))
+      .attr('x2', x(info[2].label) + 100)
+      .attr('y2', y(info[0].value))
+      .attr('class', 'line-min')
+      .attr('stroke', "#d5d5d5")
+      .attr('stroke-width', 1)
+      .attr('stroke-dasharray', 10)
+      .attr('fill', 'transparent')
+      .attr("transform", "translate(70,0)");
+
+    svg.append('svg:line')
+      .attr('x1', x(info[1].label))
+      .attr('y1', y(info[1].value))
+      .attr('x2', x(info[2].label) + 100)
+      .attr('y2', y(info[1].value))
+      .attr('class', 'line-max')
+      .attr('stroke', "#d5d5d5")
+      .attr('stroke-width', 1)
+      .attr('stroke-dasharray', 10)
+      .attr('fill', 'transparent')
+      .attr("transform", "translate(70,0)");
+
+    svg.append('svg:line')
+      .attr('x1', x(info[2].label) + 100)
+      .attr('x2', x(info[2].label) + 100)
+      .attr('y1', y(info[2].value) + 10)
+      .attr('y2', y(info[0].value))
+      .attr('class', 'line-vert')
+      .attr('stroke', "#d5d5d5")
+      .attr('stroke-width', 1)
+      .attr('fill', 'transparent')
+      .attr("transform", "translate(65,0)");
 
     svg.selectAll('.tick text')
       .attr('class', 'tick-text')
@@ -633,9 +696,26 @@
         .duration(800)
         .attr('dy', (d, i) => height - (height - y(info[i].value)) - 10)
 
+      svg.selectAll('.line-min')
+        .transition()
+        .duration(800)
+        .attr('y1', y(info[0].value))
+        .attr('y2', y(info[0].value))
+
+      svg.selectAll('.line-max')
+        .transition()
+        .duration(800)
+        .attr('y1', y(info[1].value))
+        .attr('y2', y(info[1].value))
+
+      svg.selectAll('.line-vert')
+        .transition()
+        .duration(800)
+        .attr('y1', y(info[2].value) + 10)
+        .attr('y2', y(info[0].value))
+
     });
   }
-
 
   function wrap(text, width) {
     text.each(function() {
@@ -644,7 +724,7 @@
           word,
           line = [],
           lineNumber = 0,
-          lineHeight = 1.1, // ems
+          lineHeight = 1,
           y = text.attr("y"),
           dy = parseFloat(text.attr("dy")),
           tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy);
@@ -661,6 +741,13 @@
     });
   }
 
-
+  function getInfo(index) {
+    const data = [
+      {label: 'Pre-Sale', values: [2, 3, 4, 5]},
+      {label: 'Main Sale', values: [3, 4, 5, 6]},
+      {label: 'Розничная цена', values: [10, 10, 10, 10]}
+    ];
+    return data.map(d => ({label: d.label, value: d.values[index], income: profit[index]}));
+  }
 
 })()

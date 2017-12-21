@@ -100,6 +100,29 @@ input, textarea{
   resize: none;
 }
 
+
+form{
+  .form-item{
+    padding-bottom: 12px;
+    position: relative;
+    .message{
+      color: red;
+      font-size: 10px;
+      font-weight: 300;
+      text-align: center;
+      display: none;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+    }
+    &.is-error{
+      input, textarea{border-color: $red;}
+      .message{display: block;}
+    }
+  }
+}
+
 button{
   font-family: "Gotham Pro", Arial, sans-serif;
 }
@@ -121,9 +144,11 @@ img{max-width: 100%;}
   border: 0;
   outline: none;
   cursor: pointer;
+  border: 1px solid $red;
   transition: .2s all;
   &:hover{
-    background: darken($red, 10%);
+    background: white;
+    color: $red;
     transition: .2s all;
   }
 }
@@ -206,19 +231,71 @@ header{
 	margin-top: 180px;
   overflow: hidden;
 	.block-left{
-		h1{
-			margin: 0 0 40px;
-      font-size: 16px;
-		}
-    form{
-      display: flex;
-      align-items: flex-end;
-      width: 100%;
-      .subscribe{
-        width: 230px;
-        margin-right: 32px;
-        input ~ input {margin: 15px 0 0 }
+    h1{
+      font-size: 36px;
+      font-weight: 300;
+      margin: 0 0 20px;
+    }
+    .step-1{
+      // display: none;
+      form{
+        display: flex;
+        align-items: flex-end;
+        width: 100%;
+        .subscribe{
+          width: 360px;
+          margin: 0;
+          position: relative;
+          overflow: hidden;
+          border-radius: 20px;
+          input {
+            width: 100%;
+            padding-right: 80px;
+          }
+          .send{
+            display: block;
+            width: 70px;
+            height: 42px;
+            cursor: pointer;
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: 8888;
+            border: 0;
+            border-radius: 0 20px 20px 0;
+            background: white url('../images/mail.png') no-repeat center / 38px;
+            border: 1px solid $border;
+            outline: none;
+            transition: .2s all;
+            &:hover{
+              transition: .2s all;
+              background: white url('../images/mail_h.png') no-repeat center / 38px;
+            }
+          }
+        }
+
       }
+    }
+    .step-2{
+      display: none;
+      form{
+        display: flex;
+        align-items: flex-end;
+        width: 100%;
+        .subscribe{
+          width: 230px;
+          margin-right: 32px;
+          input ~ input {margin: 15px 0 0 }
+        }
+        .btn{margin-bottom: 12px;}
+      }
+    }
+    .step-3{
+      display: none;
+    }
+    p{
+      margin: 0 0 40px;
+      font-size: 16px;
     }
 	}
 	.block-right{
@@ -275,29 +352,6 @@ header{
 			bottom: 0;
 			width: 100%;
 			max-width: 100%;
-		}
-		.btn-play{
-			display: flex;
-			align-items: center;
-			cursor: pointer;
-			position: absolute;
-			color: $red;
-			text-decoration: none;
-			bottom: 0;
-			right: 40px;
-      text-transform: none;
-      z-index: 20;
-			span{
-				line-height: 30px;
-				display: block;
-				padding-bottom: 20px;
-			}
-			&::before{
-				content: '';
-				width: 118px;
-				height: 118px;
-				background: url('../images/video.png') no-repeat center;
-			}
 		}
 	}
 }
@@ -443,6 +497,7 @@ header{
 
 .investitions{
   .histogramm{
+    overflow-x: auto;
     ul{
       margin: 0 0 20px;
       padding: 0;
@@ -464,23 +519,38 @@ header{
     }
     #histogram{
       position: relative;
-      padding-top: 40px;
-      width: 300px;
-      max-width: 300px;
+      margin-top: 40px;
+      width: 400px;
+      max-width: 400px;
       .income{
         position: absolute;
         font-size: 18px;
         font-weight: 400;
         text-align: center;
-        left: 0;
+        right: 0;
         top: 20px;
-        width: 100%;
+        &::after{
+          content: '';
+          display: block;
+          margin: 10px auto 0;
+          width: 10px;
+          height: 10px;
+          background: $border;
+          border-radius: 50%;
+          box-shadow: 0 0 0 6px white, 0 0 0 7px $border;
+        }
       }
     }
     svg{
       max-width: 100%;
       width: 100%;
-      path, line{display: none;}
+      path{display: none;}
+      .tick{
+        path, line{
+          display: none;
+        }
+      }
+
     }
   }
 }
@@ -488,6 +558,7 @@ header{
 .calculator{
 	background: $back;
 	padding: 50px 0;
+  overflow: hidden;
 	h3{
     margin: 0 0 50px;
     display: block;
@@ -509,6 +580,7 @@ header{
     color: rgba($color, .5);
 		.sum{
 			font-size: 40px;
+      white-space: nowrap;
 			color: $red;
       margin-top: 10px;
       line-height: 1;
@@ -518,6 +590,7 @@ header{
     color: rgba($color, .5);
 		.sum{
 			font-size: 40px;
+      white-space: nowrap;
       margin-top: 10px;
       line-height: 1;
       color: $color;
@@ -552,11 +625,13 @@ header{
 			p{
         color: rgba($color, .5);
 				& ~ p {margin-top: 20px;}
+        strong{white-space: nowrap;}
 				> span{
 					display: block;
 					font-size: 24px;
           margin-top: 20px;
           color: $color;
+          white-space: nowrap;
 					& ~ span{
 						font-size: 20px;
             margin-top: 0;
@@ -567,6 +642,7 @@ header{
 					span{
 						font-weight: bold;
 						margin-top: 16px;
+            white-space: wrap;
 					}
 				}
 			}
@@ -577,6 +653,7 @@ header{
 				span{
 					font-size: 30px;
 					color: $red;
+          white-space: nowrap;
 					display: block;
           > span{display: inline}
 				}
@@ -734,11 +811,42 @@ header{
 
 .roadmap{
   padding: 50px 0;
+  position: relative;
+  overflow: hidden;
   h3{
     margin: 0 0 35px;
   }
+  &::before{
+    content: '';
+    display: block;
+    height: 100%;
+    z-index: 10;
+    width: 50px;
+    position: absolute;
+    top: 80px;
+    left: 0;
+    background: -webkit-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+    background: -o-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+    background: linear-gradient(to right, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff',GradientType=1 );
+  }
+  &::after{
+    content: '';
+    z-index: 10;
+    display: block;
+    height: 100%;
+    width: 50px;
+    position: absolute;
+    top: 80px;
+    right: 0;
+    background: -moz-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+    background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
+    background: linear-gradient(to right, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=1 );
+  }
   .line-slider{
     overflow: hidden;
+    position: relative;
     height: 530px;
     .wrapper-slide{
       width: 4020px;
@@ -784,6 +892,10 @@ header{
     #line-slider{
       width: 5000px;
     }
+    .line-svg-slider{
+      position: relative;
+      top: -200px;
+    }
   }
 
   .line-slider-menu{
@@ -800,10 +912,20 @@ header{
       &.next{
         background: url('../images/r.png') no-repeat center / contain;
         margin-left: 30px;
+        transition: .2s all;
+        &:hover{
+          transition: .2s all;
+          background: url('../images/r_h.png') no-repeat center / contain;
+        }
       }
        &.prev{
         background: url('../images/l.png') no-repeat center / contain;
         margin-right: 30px;
+        transition: .2s all;
+        &:hover{
+          transition: .2s all;
+          background: url('../images/l_h.png') no-repeat center / contain;
+        }
       }
     }
   }
@@ -936,6 +1058,38 @@ header{
 		text-align: center;
 		margin: 0 0 50px;
 	}
+  .tabs-list{
+    position: relative;
+    padding: 0 20px;
+    &::before{
+      content: '';
+      display: block;
+      height: 100%;
+      z-index: 10;
+      width: 40px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: -webkit-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+      background: -o-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+      background: linear-gradient(to right, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff',GradientType=1 );
+    }
+    &::after{
+      content: '';
+      z-index: 10;
+      display: block;
+      height: 100%;
+      width: 40px;
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: -moz-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+      background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
+      background: linear-gradient(to right, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=1 );
+    }
+  }
   .heads{
     .tabs-list{
       overflow: hidden;
@@ -1041,10 +1195,20 @@ header{
           .slick-prev{
             left: 0;
             background: url('../images/l.png') no-repeat center / cover;
+            transition: .2s all;
+            &:hover{
+              transition: .2s all;
+              background: url('../images/l_h.png') no-repeat center / cover;
+            }
           }
           .slick-next{
             right: 0;
             background: url('../images/r.png') no-repeat center / cover;
+            transition: .2s all;
+            &:hover{
+              transition: .2s all;
+              background: url('../images/r_h.png') no-repeat center / cover;
+            }
           }
           margin: 0;
           padding: 0 50px;
@@ -1644,18 +1808,29 @@ footer{
       font-size: 24px !important;
     }
     .block-left{
-      form{
-        display: block;
-        text-align: center;
-        .btn{
-          margin: 20px auto 0;
-        }
-        .subscribe{
-          width:100%;
-          padding: 0;
-          margin: 0;
+      .step-1{
+        form{
+          .subscribe{
+            width:100%;
+            input{width: 100%;}
+          }
         }
       }
+      .step-2{
+        form{
+          display: block;
+          text-align: center;
+          .btn{
+            margin: 20px auto 0;
+          }
+          .subscribe{
+            width:100%;
+            padding: 0;
+            margin: 0;
+          }
+        }
+      }
+
     }
     .counter{
       margin: 50px auto 0;
@@ -1665,7 +1840,6 @@ footer{
     .title-chart{
       margin-top: 20px;
       height: 300px;
-      .btn-play{display: none;}
       .btn-white{display: inline-block;}
       ul{
         li{
@@ -1695,6 +1869,10 @@ footer{
   }
   header{
     display: block;
+  }
+
+  .join{
+    .counter{margin-top: 20px;}
   }
 
   .problems{
@@ -1910,6 +2088,7 @@ footer{
             text-align: center;
             margin: 0 0 15px;
           }
+          .text{padding: 0;}
         }
       }
       ul{
