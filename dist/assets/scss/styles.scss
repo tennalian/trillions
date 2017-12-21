@@ -465,6 +465,8 @@ header{
     #histogram{
       position: relative;
       padding-top: 40px;
+      width: 300px;
+      max-width: 300px;
       .income{
         position: absolute;
         font-size: 18px;
@@ -1749,6 +1751,7 @@ footer{
   .investitions{
     h3{text-align: center;}
     .histogramm{
+      #histogram{margin: 0 auto;}
       ul{
         li{
           text-align: center;
