@@ -12,7 +12,6 @@ var gulp = require('gulp'),
     imagemin = require('gulp-imagemin'),
     del = require('del'),
     babel = require("gulp-babel");
-const minify = require("gulp-babel-minify");
 
 var paths = {
     images: 'src/assets/images/**/*',
@@ -69,7 +68,7 @@ gulp.task('js', function() {
         .pipe(babel({
           presets: ['es2015'],
         }))
-        .pipe(minify())
+        .pipe(uglify())
         .pipe(gulp.dest('dist/assets/js'))
         .pipe(connect.reload());
 });
